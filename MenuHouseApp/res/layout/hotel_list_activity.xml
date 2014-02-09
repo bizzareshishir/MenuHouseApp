@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select City" />
+            android:text="Please Select Hotel/Restaurant" />
 
         <Button
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listCityName"
+        android:id="@+id/listHotelName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
     </ListView>

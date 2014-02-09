@@ -4,5 +4,9 @@
     <string name="app_name">MenuHouseApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="tap_any_where">Tap anywhere to continue</string>
+    <string name="please_sign_in">Please sign in</string>
+    <string name="please_sign_up">Sign Up</string>
+    <string name="dont_have_account">Dont have an Account</string>
 
 </resources>
