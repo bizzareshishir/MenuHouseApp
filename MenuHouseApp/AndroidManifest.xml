@@ -35,16 +35,40 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.example.menuhouseapp.MainActivity"
+            android:name="com.example.menuhouseapp.CityListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="com.example.menuhouseapp.HotelListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
+        <activity
+            android:name="com.example.menuhouseapp.DashBoardActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.menuhouseapp.ViewMenuActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.menuhouseapp.FeedbackActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.menuhouseapp.AboutUsActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.example.menuhouseapp.RateUsActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

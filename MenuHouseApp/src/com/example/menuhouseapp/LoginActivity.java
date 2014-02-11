@@ -92,7 +92,7 @@ public class LoginActivity extends Activity {
 			pdialog.dismiss();
 
 			if (rep != null) {
-				if (rep.contains("1")) {
+				if (rep.startsWith("1")) {
 
 					SharedPreferenceHelper.savePreferences(
 							SharedPreferenceHelper.USERNAME, userName, context);
@@ -103,13 +103,13 @@ public class LoginActivity extends Activity {
 							SharedPreferenceHelper.ADDRESS, rep.split("~")[2],
 							context);
 
-					startActivity(new Intent(context, MainActivity.class));
+					startActivity(new Intent(context, CityListActivity.class));
 					finish();
 				}
-			} if (rep.contains("0")){
-				Utils.showToast(Utils.INCORRECT_USERNAME_PASSWORD, context);
-			}
-			else
+				else if (rep.startsWith("0")) {
+					Utils.showToast(Utils.INCORRECT_USERNAME_PASSWORD, context);
+				}
+			} else
 				Utils.showToast(Utils.WARNING_1, context);
 
 			super.onPostExecute(result);

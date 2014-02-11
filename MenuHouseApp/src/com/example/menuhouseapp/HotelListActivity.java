@@ -1,17 +1,8 @@
 package com.example.menuhouseapp;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.adapters.HotelAdapter;
+import com.adapters.ArrayAdapterItem;
 import com.data.HotelInfo;
 import com.sharedpreference.SharedPreferenceHelper;
 import com.utils.Utils;
@@ -47,13 +38,12 @@ public class HotelListActivity extends Activity {
 				.execute();
 	}
 
-
 	private void init() {
 		// TODO Auto-generated method stub
 		ctx = this;
 
 		textUserName = (TextView) findViewById(R.id.tv_welcome);
-		listHotelName = (ListView) findViewById(R.id.listCityName);
+		listHotelName = (ListView) findViewById(R.id.listHotelName);
 	}
 
 	public void onClickLogout(View view) {
@@ -63,7 +53,8 @@ public class HotelListActivity extends Activity {
 	class AsyncDownloadHotel extends AsyncTask<Void, Void, Void> {
 
 		String cityId = "";
-        String response="";
+		String response = "";
+
 		public AsyncDownloadHotel(String cityId) {
 			// TODO Auto-generated constructor stub
 			this.cityId = cityId;
@@ -78,14 +69,15 @@ public class HotelListActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
-			response=getResponse(Utils.URL + Utils.CITY, cityId);
+			response = WebServiceUtil.getResponse(Utils.URL + Utils.CITY
+					+ "?city_id=" + cityId);
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
-			
+
 			String toks[] = response.split("@");
 
 			HotelInfo rArray[] = new HotelInfo[toks.length];
@@ -93,60 +85,48 @@ public class HotelListActivity extends Activity {
 			for (int i = 0; i < toks.length; i++) {
 
 				String[] tokChild = toks[i].split("~");
-				String city_id = tokChild[0];
-				String city_name = tokChild[1];
-				HotelInfo city = new HotelInfo();
-				city.id = city_id;
-				city.hotelName = city_name;
-				rArray[i] = city;
+				String hotel_id = tokChild[0];
+				String hotel_name = tokChild[1];
+				String hotel_rating = tokChild[2];
+
+				HotelInfo hotel = new HotelInfo();
+				hotel.id = hotel_id;
+				hotel.hotelName = hotel_name;
+				hotel.rating = hotel_rating;
+				rArray[i] = hotel;
 			}
-			HotelAdapter cityModel = new HotelAdapter(getApplicationContext(),
-					android.R.layout.simple_spinner_dropdown_item, rArray);
-			
-			listHotelName.setAdapter(cityModel);
-			
+			final ArrayAdapterItem hotelModel = new ArrayAdapterItem(
+					HotelListActivity.this, R.layout.list_view_row_item, rArray);
+
+			listHotelName.setAdapter(hotelModel);
+
 			listHotelName.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1,
+				public void onItemClick(AdapterView<?> arg0, View view,
 						int arg2, long arg3) {
 					// TODO Auto-generated method stub
-					
+					/*
+					 * Context context = view.getContext();
+					 * 
+					 * TextView textViewItem = ((TextView) view
+					 * .findViewById(R.id.textViewItem));
+					 * 
+					 * // get the clicked item name String listItemText =
+					 * textViewItem.getText().toString();
+					 * 
+					 * Toast.makeText(context, listItemText + " city Selected",
+					 * Toast.LENGTH_SHORT).show();
+					 */
+
+					HotelInfo hotel = hotelModel.getItem(arg2);
+					Intent intent = new Intent(ctx, DashBoardActivity.class);
+					intent.putExtra("hotel_id", hotel.id);
+					intent.putExtra("hotel_name", hotel.hotelName);
+					startActivity(intent);
 				}
 			});
 			super.onPostExecute(result);
-		}
-
-		String getResponse(String webLink, String id) {
-			// TODO Auto-generated method stub
-			HttpResponse response = null;
-			String respString = "";
-			try {
-
-				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet();
-
-				request.setURI(new URI(webLink + "?city_id=" + id));
-
-				response = client.execute(request);
-
-				respString = WebServiceUtil.convertStreamToString(response
-						.getEntity().getContent());
-
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-				return null;
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			}
-
-			return respString;
-
 		}
 
 	}

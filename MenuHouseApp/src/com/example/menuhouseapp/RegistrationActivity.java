@@ -151,7 +151,7 @@ public class RegistrationActivity extends Activity {
 				SharedPreferenceHelper.savePreferences(
 						SharedPreferenceHelper.ADDRESS, address, context);
 
-				startActivity(new Intent(context, MainActivity.class));
+				startActivity(new Intent(context, CityListActivity.class));
 				finish();
 			}
 			if (rep != null && rep.contains("0")) {

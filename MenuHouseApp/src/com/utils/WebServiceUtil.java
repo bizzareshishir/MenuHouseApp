@@ -19,11 +19,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.util.Log;
+
 public class WebServiceUtil {
 	public static String SUCCESS = "SUCCESS";
 	public static String FAILURE = "FAILURE";
-
-
 
 	public static String convertStreamToString(InputStream is) {
 
@@ -102,5 +102,35 @@ public class WebServiceUtil {
 		return null;
 	}
 
-	
+	public static String getResponse(String url) {
+		// TODO Auto-generated method stub
+		HttpResponse response = null;
+		String respString = "";
+		try {
+
+			HttpClient client = new DefaultHttpClient();
+			HttpGet request = new HttpGet();
+			Log.e("newlog", url);
+			request.setURI(new URI(url));
+
+			response = client.execute(request);
+
+			respString = WebServiceUtil.convertStreamToString(response
+					.getEntity().getContent());
+
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+		return respString;
+
+	}
 }

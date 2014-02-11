@@ -15,7 +15,7 @@ import com.data.CityInfo;
 import com.sharedpreference.SharedPreferenceHelper;
 import com.utils.Utils;
 
-public class MainActivity extends Activity {
+public class CityListActivity extends Activity {
 
 	TextView textCityname;
 	ListView listCityName;

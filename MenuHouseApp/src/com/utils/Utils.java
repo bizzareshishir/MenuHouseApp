@@ -1,5 +1,7 @@
 package com.utils;
 
+import com.sharedpreference.SharedPreferenceHelper;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
@@ -11,6 +13,11 @@ public class Utils {
 	public static final String REGISTRATION = "RegistrationServlet";
 
 	public static final String CITY = "CityIdServlet";
+	public static final String CATEGORY = "GetCategoryServlet";
+	public static final String MENU = "ViewMenuServlet";
+	public static final String FEEDBACK = "FeedbackServlet";
+	public static final String ABOUT_US = "GetHotelAboutusDetailsServlet";
+	public static final String RATING = "RatingServlet";
 
 	public static final String WARNING_1 = "Something went wrong";
 	public static final String WARNING_2 = "All fields are mandatory";
@@ -33,4 +40,10 @@ public class Utils {
 	}
 
 	public static final String CITY_LIST = "1~Ahmednagar@2~Akola@3~Amravati@4~Aurangabad@5~Beed@6~Bhandara@7~Buldhana@8~Chandrapur@9~Dhule@10~Gadchiroli@11~Gondia@12~Hingoli@13~Jalgaon@14~Jalna@15~Kolhapur@16~Latur@17~Mumbai City@18~Mumbai Suburban@19~Nagpur@20~Nanded@21~Nandurbar@22~Nashik@23~Osmanabad@24~Parbhani@25~Pune@26~Raigad@27~Ratnagiri@28~Sangli@29~Satara@30~Sindhudurg@31~Solapur@32~Thane@33~Wardha@34~Washim@35~Yavatmal";
+
+	public static String userName(Context ctx) {
+
+		return SharedPreferenceHelper.getPreference(ctx,
+				SharedPreferenceHelper.USERNAME);
+	}
 }
